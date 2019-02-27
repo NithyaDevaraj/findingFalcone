@@ -1,0 +1,11 @@
+<div class="form-group">
+    <select class="form-control" name="planet" [(ngModel)]="selectedPlanet" (change)="updateSelectedPlanet()">
+        <option value="">Select Planet</option>
+        <option *ngFor="let item of planetList" [value]="item.name + '-'+item.distance">{{item.name}}</option>
+    </select> {{selectedPlanet }}
+</div>
+<div class="form-group" [hidden]="selectedPlanet.split('-')[1] == 0">
+    <ul>
+        <li *ngFor="let item of vehicleList"> <input type="radio" name="vehicleGroup" [disabled]="item.max_distance < selectedPlanet.split('-')[1]" /> {{item.name}} ({{item.total_no}}) </li>
+    </ul>
+</div>
