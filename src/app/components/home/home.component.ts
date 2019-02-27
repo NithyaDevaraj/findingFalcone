@@ -7,27 +7,36 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class HomeComponent implements OnInit {
-   
-    constructor(private _appService : AppService) { }
+    totalTimeTaken: number = 0;
+    constructor(private _appService: AppService) { 
+        this.getTimeTaken();
+    }
 
-    ngOnInit() { 
+    ngOnInit() {
         this.getPlanets();
         this.getVehicles();
     }
 
-    getPlanets(){
-        this._appService.getPlanets().subscribe((res) =>{
+    getPlanets() {
+        this._appService.getPlanets().subscribe((res) => {
             this._appService.setPlanetList(res);
-        }, (error) =>{
+        }, (error) => {
             console.log("Error occured while fetching the planets", error);
         });
     }
 
-    getVehicles(){
-        this._appService.getVehicles().subscribe((res) =>{
+    getVehicles() {
+        this._appService.getVehicles().subscribe((res) => {
             this._appService.setVehicleList(res);
-        }, (error) =>{
+        }, (error) => {
             console.log("Error occured while fetching the vehicles", error);
+        });
+    }
+
+    getTimeTaken() {
+        debugger;
+        this._appService.timeTakenServiceSubject.subscribe((tt) => {
+            this.totalTimeTaken = this._appService.getTimeTaken();
         });
     }
 }

@@ -5,40 +5,49 @@ import { vehicle } from '../../models/vehicle.model';
 
 @Component({
     selector: 'app-selection-form',
-    templateUrl: 'selection-form.component.html',
-    styleUrls:['./selection-form.component.css']
+    templateUrl: 'selection-form.component.html'
 })
 
 export class SelectionFormComponent implements OnInit {
-    selectedPlanet : string = "";
-    planetList : planet[];
-    vehicleList : vehicle[];
-
-    constructor(private _appService : AppService) {
-     }
-
-    ngOnInit() { 
-        this.getPlanetList();
-        this.getVehicleList();
+    selectedPlanet: planet;
+    planetList: planet[];
+    
+    constructor(private _appService: AppService) {
+        this.resetSelectedPlanet();
     }
 
-    getPlanetList(){
+    ngOnInit() {
+        this.getPlanetList();
+    }
+
+    getPlanetList() {
         let self = this;
         this._appService.planetServiceSubject.subscribe(() => {
             this.planetList = this._appService.getPlanetList();
-            if(this.selectedPlanet)
-              this.planetList = [{"name" : this.selectedPlanet.split('-')[0], "distance" : parseInt(this.selectedPlanet.split('-')[1])} ,...this.planetList];
+            if (this.selectedPlanet.name)
+                this.planetList = [this.selectedPlanet, ...this.planetList];
         });
     }
 
-    getVehicleList(){
-        this._appService.vehicleServiceSubject.subscribe(() =>{
-            this.vehicleList = this._appService.getVehicleList();
-            console.log(this.vehicleList);
-        });
+    updateSelectedPlanet(e: any) {
+
+        if (e.target.value.length > 0) {
+
+            if (this.selectedPlanet.name)
+                this._appService.setSelectedPlanets(this.selectedPlanet.name, "delete");
+
+            this.selectedPlanet = this.planetList.find(x=>x.name == e.target.value);
+            this._appService.setSelectedPlanets(this.selectedPlanet.name, "add");
+        }
+        else {
+            this._appService.setSelectedPlanets(this.selectedPlanet.name, "delete");
+            this.resetSelectedPlanet();
+        }
     }
 
-    updateSelectedPlanet(){
-        this._appService.setSelectedPlanets(this.selectedPlanet.split('-')[0]);
+    resetSelectedPlanet() {
+        this.selectedPlanet = { name: "", distance: 0 };
     }
+
+    
 }
