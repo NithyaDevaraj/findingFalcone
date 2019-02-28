@@ -8,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
 
 export class HomeComponent implements OnInit {
     totalTimeTaken: number = 0;
+    isValidForSendingRequest : boolean = false;
+
     constructor(private _appService: AppService) { 
         this.getTimeTaken();
     }
@@ -36,7 +38,17 @@ export class HomeComponent implements OnInit {
     getTimeTaken() {
         debugger;
         this._appService.timeTakenServiceSubject.subscribe((tt) => {
-            this.totalTimeTaken = this._appService.getTimeTaken();
+            this.totalTimeTaken = this._appService.getTimeTaken().totalTime;
+            if(this._appService.getTimeTaken().length === 4)
+                this.isValidForSendingRequest = true;
+            else
+                this.isValidForSendingRequest = false;
+        });
+    }
+
+    findFalcone(){
+        this._appService.findFlacone().subscribe((result) =>{
+            console.log(result);
         });
     }
 }

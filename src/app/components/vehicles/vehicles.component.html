@@ -1,9 +1,7 @@
 <div class="form-group">
-    <ul [hidden]="selectedPlanet.name.length === 0">
-        <li *ngFor="let item of vehicleList; index as i;"> <input type="radio" name="vehicleGroup"
-                [value]="item.name" [checked]="item.name == selectedVehicle"
-                [disabled]="(item.max_distance < selectedPlanet.distance) || (item.total_no === 0)"
-                (change)="updateSelectedVehicle($event)" /> {{item.name}} ({{item.total_no}})
+    <ul>
+        <li *ngFor="let item of vehicleList; index as i;"> <input type="radio" name="vehicleGroup" [value]="item.name" [checked]="item.name == selectedVehicle" [disabled]="(item.max_distance < selectedPlanet.distance) || (item.total_no === 0)" (change)="updateSelectedVehicle($event)" /> {{item.name}}
+            ({{item.total_no}})
         </li>
     </ul>
 </div>

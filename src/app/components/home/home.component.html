@@ -8,7 +8,7 @@
             <app-selection-form class="col-lg-3"></app-selection-form>
             <app-selection-form class="col-lg-3"></app-selection-form>
 
-            <input type="submit" value="SUBMIT" /> {{totalTimeTaken}}
+            <input type="button" value="SUBMIT" class="btn btn-primary" (click)="findFalcone()" [disabled]="!isValidForSendingRequest" /> {{totalTimeTaken}}
         </div>
     </div>
 </div>

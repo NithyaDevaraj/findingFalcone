@@ -1,9 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { planet } from '../models/planet.model';
 import { vehicle } from '../models/vehicle.model';
 import { Subject, Observable } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -12,7 +13,7 @@ export class AppService {
 
     selectedPlanets: string[] = [];
     selectedVehicles: string[] = [];
-  
+
     planetList: planet[];
     vehicleList: vehicle[];
 
@@ -22,9 +23,11 @@ export class AppService {
     vehicleServiceSubject: Subject<any>;
     selectedVehicleChanged: Observable<any>;
 
-    timeTaken : number[] = [];
-    timeTakenServiceSubject : Subject<any>;
-    timeTakenChanged : Observable<any>;
+    timeTaken: number[] = [];
+    timeTakenServiceSubject: Subject<any>;
+    timeTakenChanged: Observable<any>;
+
+    headers: HttpHeaders;
 
     constructor(private http: HttpClient) {
         this.planetServiceSubject = new Subject<any>();
@@ -38,7 +41,8 @@ export class AppService {
 
         this.planetList = [];
         this.vehicleList = [];
-      
+
+        this.headers = new HttpHeaders().append("Accept", "application/json").append("Content-Type", "application/json");
     }
 
     getPlanets() {
@@ -70,10 +74,10 @@ export class AppService {
     }
 
     getVehicleList() {
-        let remainingVList : vehicle[] = JSON.parse(localStorage.getItem("vlist"));
-        for(let i=0;i<this.selectedVehicles.length;i++){
+        let remainingVList: vehicle[] = JSON.parse(localStorage.getItem("vlist"));
+        for (let i = 0; i < this.selectedVehicles.length; i++) {
             let index = remainingVList.findIndex(x => x.name === this.selectedVehicles[i]);
-        
+
             remainingVList[index].total_no = remainingVList[index].total_no - 1;
         }
 
@@ -96,7 +100,7 @@ export class AppService {
         this.vehicleServiceSubject.next();
     }
 
-    setSelectedVehicles(item:string, action:string){
+    setSelectedVehicles(item: string, action: string) {
         if (action == "add") {
             this.selectedVehicles.push(item);
         }
@@ -109,11 +113,11 @@ export class AppService {
         this.vehicleServiceSubject.next();
     }
 
-    setTimeTaken(time : number, action:string){
-        if(action == "add"){
+    setTimeTaken(time: number, action: string) {
+        if (action == "add") {
             this.timeTaken.push(time);
         }
-        else if(action == "delete"){
+        else if (action == "delete") {
             let index = this.timeTaken.findIndex(x => x == time);
             if (index > -1)
                 this.timeTaken.splice(index, 1);
@@ -122,8 +126,22 @@ export class AppService {
         this.timeTakenServiceSubject.next();
     }
 
-    getTimeTaken(){
-        return this.timeTaken.length > 0 ? this.timeTaken.reduce((a, b) => a + b) : 0;
+    getTimeTaken() {
+        return {"totalTime" : this.timeTaken.length > 0 ? this.timeTaken.reduce((a, b) => a + b) : 0, "length" : this.timeTaken.length};         
+    }
+
+    findFlacone() {
+        return this.http.post<string>(environment.tokenUrl, null, { headers: this.headers }).pipe(mergeMap(token => this.find(token)))
+    }
+
+    find(token: any) {
+
+        let body = {
+            "token": token.token,
+            "planet_names": this.selectedPlanets,
+            "vehicle_names": this.selectedVehicles
+        }
+        return this.http.post<any>(environment.findUrl, body, { headers: this.headers });
     }
 
 }
