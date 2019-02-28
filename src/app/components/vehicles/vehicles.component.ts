@@ -15,6 +15,7 @@ export class VehiclesComponent implements OnInit, OnChanges {
     vehicleList: vehicle[];
     selectedVehicle: string = "";
     timeTaken: number = 0;
+    imageBasePath : string = "../../../../public/images/";
 
     constructor(private _appService: AppService, private cdr: ChangeDetectorRef) {
 
@@ -65,7 +66,7 @@ export class VehiclesComponent implements OnInit, OnChanges {
     }
 
     updateTimeTaken() {
-        debugger;
+
         let sVehicle = this.vehicleList.find(x => x.name == this.selectedVehicle);
         if (sVehicle && sVehicle.name) {
             let timeTaken = this.selectedPlanet.distance / sVehicle.speed;

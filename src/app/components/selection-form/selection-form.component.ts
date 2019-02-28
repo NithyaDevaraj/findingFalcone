@@ -5,12 +5,14 @@ import { vehicle } from '../../models/vehicle.model';
 
 @Component({
     selector: 'app-selection-form',
-    templateUrl: 'selection-form.component.html'
+    templateUrl: 'selection-form.component.html',
+    styleUrls : ['./selection-form.component.css']
 })
 
 export class SelectionFormComponent implements OnInit {
     selectedPlanet: planet;
     planetList: planet[];
+    imageBasePath : string = "../../../../public/images/";
     
     constructor(private _appService: AppService) {
         this.resetSelectedPlanet();

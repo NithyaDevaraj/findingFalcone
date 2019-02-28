@@ -36,7 +36,7 @@ export class HomeComponent implements OnInit {
     }
 
     getTimeTaken() {
-        debugger;
+ 
         this._appService.timeTakenServiceSubject.subscribe((tt) => {
             this.totalTimeTaken = this._appService.getTimeTaken().totalTime;
             if(this._appService.getTimeTaken().length === 4)

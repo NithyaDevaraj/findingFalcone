@@ -1,7 +1,35 @@
-<div class="form-group">
+<!-- <div class="form-group">
     <ul>
         <li *ngFor="let item of vehicleList; index as i;"> <input type="radio" name="vehicleGroup" [value]="item.name" [checked]="item.name == selectedVehicle" [disabled]="(item.max_distance < selectedPlanet.distance) || (item.total_no === 0)" (change)="updateSelectedVehicle($event)" /> {{item.name}}
             ({{item.total_no}})
         </li>
     </ul>
+</div> -->
+
+<div class="form-group">
+    <ul class="list-group">
+        <li class="list-group-item" *ngFor="let item of vehicleList; index as i;">
+            <label>
+                <input type="radio" name="vehicleGroup" [value]="item.name" [checked]="item.name == selectedVehicle"
+                    [disabled]="(item.max_distance < selectedPlanet.distance) || (item.total_no === 0)"
+                    (change)="updateSelectedVehicle($event)" />
+                <img [src]="imageBasePath + item.name + '.svg'">
+                {{item.name}} ({{item.total_no}})
+            </label>
+        </li>
+    </ul>
+
+    <!-- <div class="row">
+        <div class="col-lg-6 vehiclebox" *ngFor="let item of vehicleList; index as i;">
+            <label>
+            <input type="radio" name="vehicleGroup" [value]="item.name" [checked]="item.name == selectedVehicle"
+                [disabled]="(item.max_distance < selectedPlanet.distance) || (item.total_no === 0)"
+                (change)="updateSelectedVehicle($event)" /> 
+                <img [src]="imageBasePath + item.name + '.svg'">
+                <h6>{{item.name}}</h6>
+                <span>Remaining : {{item.total_no}}</span> 
+            </label>
+        </div>
+    </div> -->
+
 </div>

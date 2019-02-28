@@ -11,4 +11,4 @@ import 'jquery';
 import 'bootstrap';
 
 // import "bootstrap/scss/bootstrap.scss";
-import "bootswatch/dist/pulse/bootstrap.min.css";
+import "bootswatch/dist/slate/bootstrap.min.css";
