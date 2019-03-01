@@ -2,6 +2,7 @@ import { Component, OnInit, Input, OnChanges, SimpleChanges, ChangeDetectorRef }
 import { planet } from '../../models/planet.model';
 import { vehicle } from '../../models/vehicle.model';
 import { AppService } from '../../services/app.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-vehicles',
@@ -15,9 +16,9 @@ export class VehiclesComponent implements OnInit, OnChanges {
     vehicleList: vehicle[];
     selectedVehicle: string = "";
     timeTaken: number = 0;
-    imageBasePath : string = "../../../../public/images/";
+    imageBasePath: string = "../../../../public/images/";
 
-    constructor(private _appService: AppService, private cdr: ChangeDetectorRef) {
+    constructor(private _appService: AppService, private cdr: ChangeDetectorRef, private _toster : ToastrService) {
 
     }
 
@@ -42,18 +43,24 @@ export class VehiclesComponent implements OnInit, OnChanges {
 
     updateSelectedVehicle(e: any) {
 
-        if (this.selectedVehicle) {
-            this._appService.setSelectedVehicles(this.selectedVehicle, "delete");
+        if (this.selectedPlanet.name) {
 
-            this._appService.setSelectedVehicles(e.target.value, "add");
-            this.selectedVehicle = e.target.value;
-        }
-        else {
-            this._appService.setSelectedVehicles(e.target.value, "add");
-            this.selectedVehicle = e.target.value;
-        }
+            if (this.selectedVehicle) {
+                this._appService.setSelectedVehicles(this.selectedVehicle, "delete");
 
-        this.updateTimeTaken();
+                this._appService.setSelectedVehicles(e.target.value, "add");
+                this.selectedVehicle = e.target.value;
+            }
+            else {
+                this._appService.setSelectedVehicles(e.target.value, "add");
+                this.selectedVehicle = e.target.value;
+            }
+
+            this.updateTimeTaken();
+        }
+        else{
+            this._toster.error("Please select the planet first","Vehicle Selection Error");
+        }
     }
 
     resetSelectedVehicle() {

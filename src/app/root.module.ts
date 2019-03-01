@@ -4,6 +4,9 @@ import { BrowserModule } from "@angular/platform-browser";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+ 
+import { ToastrModule } from 'ngx-toastr';
 
 import { RootComponent } from "./components/root/root.component";
 import { FooterComponent } from './components/footer/footer.component';
@@ -17,7 +20,7 @@ import { routes } from "./root.routes";
 
 
 @NgModule({
-    imports: [BrowserModule, HttpClientModule, FormsModule, RouterModule.forRoot(routes)],
+    imports: [BrowserModule, HttpClientModule, FormsModule, RouterModule.forRoot(routes), BrowserAnimationsModule, ToastrModule.forRoot()],
     declarations: [RootComponent, HeaderComponent, FooterComponent, HomeComponent, NotFoundComponent, SelectionFormComponent, VehiclesComponent ],
     bootstrap: [RootComponent]
 })

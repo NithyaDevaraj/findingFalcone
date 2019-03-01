@@ -11,4 +11,5 @@ import 'jquery';
 import 'bootstrap';
 
 // import "bootstrap/scss/bootstrap.scss";
-import "bootswatch/dist/slate/bootstrap.min.css";
+import "bootswatch/dist/sandstone/bootstrap.min.css";
+import 'ngx-toastr/toastr.css';

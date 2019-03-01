@@ -1,9 +1,10 @@
-import { Component,OnInit } from "@angular/core";
+import { Component,OnInit, ViewEncapsulation } from "@angular/core";
 
 @Component({
     selector: 'root',
     templateUrl: "./root.component.html",
-    styleUrls:["./root.component.css"]
+    styleUrls:["./root.component.css"],
+    encapsulation : ViewEncapsulation.None
 })
 export class RootComponent implements OnInit {
 
