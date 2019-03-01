@@ -27,6 +27,8 @@ export class AppService {
     timeTakenServiceSubject: Subject<any>;
     timeTakenChanged: Observable<any>;
 
+    result: any = {};
+
     headers: HttpHeaders;
 
     constructor(private http: HttpClient) {
@@ -54,8 +56,8 @@ export class AppService {
     }
 
     setPlanetList(pList: planet[]) {
-        console.log("set planet", pList);
         this.planetList = pList;
+        localStorage.setItem("plist", JSON.stringify(pList));
         this.planetServiceSubject.next();
     }
 
@@ -127,7 +129,7 @@ export class AppService {
     }
 
     getTimeTaken() {
-        return {"totalTime" : this.timeTaken.length > 0 ? this.timeTaken.reduce((a, b) => a + b) : 0, "length" : this.timeTaken.length};         
+        return { "totalTime": this.timeTaken.length > 0 ? this.timeTaken.reduce((a, b) => a + b) : 0, "length": this.timeTaken.length };
     }
 
     findFlacone() {
@@ -142,6 +144,28 @@ export class AppService {
             "vehicle_names": this.selectedVehicles
         }
         return this.http.post<any>(environment.findUrl, body, { headers: this.headers });
+    }
+
+    resetEverything() {
+        this.selectedPlanets = [];
+        this.selectedVehicles = [];
+        this.timeTaken = [];
+        this.result = {};
+
+        this.planetServiceSubject.next();
+        this.vehicleServiceSubject.next();
+        this.timeTakenServiceSubject.next();
+
+        return "done";
+    }
+
+    setResult(res: any) {
+        this.result = res;
+        this.result["timeTaken"] = this.timeTaken.reduce((a, b) => a + b);
+    }
+
+    getResult() {
+        return this.result;
     }
 
 }

@@ -24,6 +24,7 @@ export class SelectionFormComponent implements OnInit {
 
     getPlanetList() {
         let self = this;
+
         this._appService.planetServiceSubject.subscribe(() => {
             this.planetList = this._appService.getPlanetList();
             if (this.selectedPlanet.name)

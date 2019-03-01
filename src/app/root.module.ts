@@ -17,11 +17,17 @@ import { VehiclesComponent } from './components/vehicles/vehicles.component';
 
 import { AppService } from './services/app.service';
 import { routes } from "./root.routes";
+import { FindComponent } from './components/find/find.component';
+import { ResultComponent } from './components/result/result.componet';
+import { AuthGuard } from './services/authguard.service';
 
 
 @NgModule({
     imports: [BrowserModule, HttpClientModule, FormsModule, RouterModule.forRoot(routes), BrowserAnimationsModule, ToastrModule.forRoot()],
-    declarations: [RootComponent, HeaderComponent, FooterComponent, HomeComponent, NotFoundComponent, SelectionFormComponent, VehiclesComponent ],
+    declarations: [RootComponent, HeaderComponent, 
+        FooterComponent, HomeComponent, NotFoundComponent, 
+        SelectionFormComponent, VehiclesComponent, FindComponent, ResultComponent ],
+    providers : [AuthGuard],
     bootstrap: [RootComponent]
 })
 export class RootModule { }
