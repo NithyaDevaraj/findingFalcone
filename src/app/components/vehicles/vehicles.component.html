@@ -5,7 +5,7 @@
                 <input type="radio" name="vehicleGroup" [value]="item.name" [checked]="item.name == selectedVehicle"
                     [disabled]="(item.max_distance < selectedPlanet.distance) || (item.total_no === 0)"
                     (change)="updateSelectedVehicle($event)" />
-                <img [src]="imageBasePath + item.name + '.svg'">
+                <img [src]="imageBasePath + item.name + '.png'">
                 {{item.name}} ({{item.total_no}})
             </label>
         </li>

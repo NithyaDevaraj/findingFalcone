@@ -58,7 +58,9 @@ module.exports = function(env) {
                     test: /\.ts$/,
                     loaders: [{
                         loader: 'awesome-typescript-loader',
-                        options: { configFileName: './tsconfig.json' }
+                        options: {
+                            configFileName: './tsconfig.json'
+                        }
                     }, 'angular2-template-loader']
                 },
                 {
@@ -74,39 +76,49 @@ module.exports = function(env) {
                 },
                 {
                     test: /[\/\\]@angular[\/\\]core[\/\\].+\.js$/,
-                    parser: { system: true }
+                    parser: {
+                        system: true
+                    }
                 },
                 {
                     test: cssRegex,
                     include: /node_modules/,
-                    use: getStyleLoadersIncludingNodeModules(true, { importLoaders: 1 })
+                    use: getStyleLoadersIncludingNodeModules(true, {
+                        importLoaders: 1
+                    })
                 },
                 {
                     test: sassRegex,
                     include: /node_modules/,
-                    use: getStyleLoadersIncludingNodeModules(true, { importLoaders: 2 }, 'sass-loader')
+                    use: getStyleLoadersIncludingNodeModules(true, {
+                        importLoaders: 2
+                    }, 'sass-loader')
                 },
                 {
                     test: cssRegex,
                     exclude: /node_modules/,
-                    use: getStyleLoadersIncludingNodeModules(false, { importLoaders: 1 })
+                    use: getStyleLoadersIncludingNodeModules(false, {
+                        importLoaders: 1
+                    })
                 },
                 {
                     test: sassRegex,
                     exclude: /node_modules/,
-                    use: getStyleLoadersIncludingNodeModules(false, { importLoaders: 2 }, 'sass-loader')
+                    use: getStyleLoadersIncludingNodeModules(false, {
+                        importLoaders: 2
+                    }, 'sass-loader')
                 },
                 {
-                    test: /\.(eot|svg|ttf|woff|woff2|bmp|gif|jpe?g|png)$/,
+                    test: /\.(eot|svg|ttf|woff|woff2|bmp|gif|jpe?g)$/,
                     loader: "url-loader",
                     options: {
-                        limit: 10000,
+                        limit: 1000,
                         name: `${paths.outputMediaPath}[name].[ext]`
                     }
                 },
                 {
-                    test: /\.(ico)$/,
-                    use: "file-loader?name=[name].[ext]"
+                    test: /\.(ico|png)$/,
+                    use: `file-loader?name=${paths.outputMediaPath}[name].[ext]`
                 }
             ]
         },

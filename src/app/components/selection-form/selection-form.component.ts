@@ -51,6 +51,5 @@ export class SelectionFormComponent implements OnInit {
     resetSelectedPlanet() {
         this.selectedPlanet = { name: "", distance: 0 };
     }
-
     
 }
