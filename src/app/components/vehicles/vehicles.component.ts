@@ -3,6 +3,7 @@ import { planet } from '../../models/planet.model';
 import { vehicle } from '../../models/vehicle.model';
 import { AppService } from '../../services/app.service';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from "../../../environments/environment";
 
 @Component({
     selector: 'app-vehicles',
@@ -16,7 +17,7 @@ export class VehiclesComponent implements OnInit, OnChanges {
     vehicleList: vehicle[];
     selectedVehicle: string = "";
     timeTaken: number = 0;
-    imageBasePath: string = "../../../../public/images/";
+    imageBasePath : string = environment.imagePath;
 
     constructor(private _appService: AppService, private cdr: ChangeDetectorRef, private _toster : ToastrService) {
 

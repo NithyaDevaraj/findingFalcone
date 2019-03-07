@@ -12,5 +12,6 @@ module.exports = {
     appBuildPath: resolvePath('dist'),
     outputJSPath: 'static/js/',
     outputCSSPath: 'static/css/',
-    outputMediaPath: 'static/media/'
+    outputMediaPath: 'static/media/',
+    inputImagePath : 'public/images'
 };

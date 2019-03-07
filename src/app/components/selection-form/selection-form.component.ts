@@ -2,6 +2,7 @@ import { AppService } from './../../services/app.service';
 import { Component, OnInit } from '@angular/core';
 import { planet } from '../../models/planet.model';
 import { vehicle } from '../../models/vehicle.model';
+import { environment } from "../../../environments/environment";
 
 @Component({
     selector: 'app-selection-form',
@@ -12,7 +13,7 @@ import { vehicle } from '../../models/vehicle.model';
 export class SelectionFormComponent implements OnInit {
     selectedPlanet: planet;
     planetList: planet[];
-    imageBasePath : string = "../../../../public/images/";
+    imageBasePath : string = environment.imagePath;
     
     constructor(private _appService: AppService) {
         this.resetSelectedPlanet();

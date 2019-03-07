@@ -4,4 +4,5 @@ export interface Environment {
     vehicleUrl: string;
     tokenUrl: string;
     findUrl: string;
+    imagePath : string;
 }

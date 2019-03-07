@@ -2,13 +2,14 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CopyPlugin = require('copy-webpack-plugin');
 
 const paths = require('./paths');
 
 const cssRegex = /\.css$/;
 const sassRegex = /\.(scss|sass)$/;
 
-module.exports = function(env) {
+module.exports = function (env) {
     const isEnvDevelopment = env === 'dev';
     const isEnvProduction = env === 'prod';
 
@@ -55,71 +56,71 @@ module.exports = function(env) {
 
         module: {
             rules: [{
-                    test: /\.ts$/,
-                    loaders: [{
-                        loader: 'awesome-typescript-loader',
-                        options: {
-                            configFileName: './tsconfig.json'
-                        }
-                    }, 'angular2-template-loader']
-                },
-                {
-                    test: /\.html$/,
-                    use: [{
-                        loader: "html-loader",
-                        options: {
-                            minimize: true,
-                            caseSensitive: true,
-                            removeAttributeQuotes: false
-                        }
-                    }]
-                },
-                {
-                    test: /[\/\\]@angular[\/\\]core[\/\\].+\.js$/,
-                    parser: {
-                        system: true
-                    }
-                },
-                {
-                    test: cssRegex,
-                    include: /node_modules/,
-                    use: getStyleLoadersIncludingNodeModules(true, {
-                        importLoaders: 1
-                    })
-                },
-                {
-                    test: sassRegex,
-                    include: /node_modules/,
-                    use: getStyleLoadersIncludingNodeModules(true, {
-                        importLoaders: 2
-                    }, 'sass-loader')
-                },
-                {
-                    test: cssRegex,
-                    exclude: /node_modules/,
-                    use: getStyleLoadersIncludingNodeModules(false, {
-                        importLoaders: 1
-                    })
-                },
-                {
-                    test: sassRegex,
-                    exclude: /node_modules/,
-                    use: getStyleLoadersIncludingNodeModules(false, {
-                        importLoaders: 2
-                    }, 'sass-loader')
-                },
-                {
-                    test: /\.(eot|svg|ttf|woff|woff2|bmp|gif|jpe?g)$/,
-                    loader: "url-loader",
+                test: /\.ts$/,
+                loaders: [{
+                    loader: 'awesome-typescript-loader',
                     options: {
-                        limit: 1000,
-                        name: `${paths.outputMediaPath}[name].[ext]`
+                        configFileName: './tsconfig.json'
                     }
-                },
-                {
-                    test: /\.(ico|png)$/,
-                    use: `file-loader?name=${paths.outputMediaPath}[name].[ext]`
+                }, 'angular2-template-loader']
+            },
+            {
+                test: /\.html$/,
+                use: [{
+                    loader: "html-loader",
+                    options: {
+                        minimize: true,
+                        caseSensitive: true,
+                        removeAttributeQuotes: false
+                    }
+                }]
+            },
+            {
+                test: /[\/\\]@angular[\/\\]core[\/\\].+\.js$/,
+                parser: {
+                    system: true
                 }
+            },
+            {
+                test: cssRegex,
+                include: /node_modules/,
+                use: getStyleLoadersIncludingNodeModules(true, {
+                    importLoaders: 1
+                })
+            },
+            {
+                test: sassRegex,
+                include: /node_modules/,
+                use: getStyleLoadersIncludingNodeModules(true, {
+                    importLoaders: 2
+                }, 'sass-loader')
+            },
+            {
+                test: cssRegex,
+                exclude: /node_modules/,
+                use: getStyleLoadersIncludingNodeModules(false, {
+                    importLoaders: 1
+                })
+            },
+            {
+                test: sassRegex,
+                exclude: /node_modules/,
+                use: getStyleLoadersIncludingNodeModules(false, {
+                    importLoaders: 2
+                }, 'sass-loader')
+            },
+            {
+                test: /\.(eot|svg|ttf|woff|woff2|bmp|gif|jpe?g)$/,
+                loader: "url-loader",
+                options: {
+                    limit: 1000,
+                    name: `${paths.outputMediaPath}[name].[ext]`
+                }
+            },
+            {
+                test: /\.(ico|png)$/,
+                use: `file-loader?name=${paths.outputMediaPath}[name].[ext]`
+            }
             ]
         },
 
@@ -137,6 +138,9 @@ module.exports = function(env) {
                 jQuery: 'jquery',
                 'window.jQuery': 'jquery'
             }),
+            isEnvProduction && new CopyPlugin([
+                { from: paths.inputImagePath, to: paths.outputMediaPath }
+            ]),
             isEnvProduction && new MiniCssExtractPlugin({
                 filename: `${paths.outputCSSPath}[name].[hash].css`,
                 chunkFilename: `${paths.outputCSSPath}[name].[hash].chunk.css`
