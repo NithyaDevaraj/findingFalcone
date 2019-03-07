@@ -1,11 +1,8 @@
 # Finding-Falcone
-_______________________
 This project is created with **Angular 7** and webpack configuration. 
 
 # Build Setup
-______________________
-
-## # install dependencies
+#### # install dependencies
 npm install
 
 ## # serve with hot reload at localhost:4200
