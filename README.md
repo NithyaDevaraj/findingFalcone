@@ -2,8 +2,6 @@
 # Finding-Falcone
 This project is created with **Angular 7** and webpack configuration. 
 
-# Demo
-[https://dpn-finding-falcone.herokuapp.com/](https://dpn-finding-falcone.herokuapp.com/)
 
 # Build Setup
 
