@@ -10,6 +10,16 @@ ul {
 
 label {
     margin-bottom: 0;
+    cursor: pointer;
+}
+.disable-item > label.control {
+    cursor : not-allowed !important;
+    pointer-events: all !important;
+}
+
+.disable-item > [type=radio]+img {
+    cursor : not-allowed !important;
+    pointer-events: all !important;
 }
 
 .list-group-item {
@@ -45,11 +55,13 @@ label {
 }
 
 .list-group-item{
+    cursor: pointer;
     border: none;
     border-top:1px solid #DFD7CA !important;
 }
 
 .disable-item{
     opacity: 0.5;
-    cursor : not-allowed;
+    cursor : not-allowed !important;
+    pointer-events: all !important;
 }
